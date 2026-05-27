@@ -1,13 +1,15 @@
 import logging
 import os
 
-from fastapi import FastAPI
+from fastapi import BackgroundTasks, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 
 from services.analytics import (
     attrition_risk_score,
     benefits_impact_analysis,
     compensation_bonus_analysis,
+    dashboard_overview_analysis,
     get_attrition_risk,
     get_basic_stats,
     get_performance_groups,
@@ -76,6 +78,7 @@ from services.prompt_builder import (
     build_training_recommendation_prompt,
     build_worklife_prompt,
 )
+from services.report_service import cleanup_report_assets, generate_report
 from services.utils import to_native_type, validate_dataframe
 
 logging.basicConfig(
@@ -169,6 +172,77 @@ def basic_stats():
     except Exception as exc:
         logger.exception("Failed to generate basic stats")
         return {"status": "error", "message": str(exc)}
+
+
+@app.get("/dashboard-overview")
+def dashboard_overview():
+    try:
+        _, processed_df = process_pipeline()
+        data = dashboard_overview_analysis(processed_df)
+        return {"status": "success", "data": data}
+    except Exception as exc:
+        logger.exception("Failed to generate dashboard overview")
+        return {"status": "error", "message": str(exc)}
+
+
+def _serve_report(report_key: str, background_tasks: BackgroundTasks):
+    try:
+        _, processed_df = process_pipeline()
+        pdf_path, temp_dir = generate_report(report_key, processed_df)
+        background_tasks.add_task(cleanup_report_assets, temp_dir)
+        return FileResponse(
+            pdf_path,
+            media_type="application/pdf",
+            filename=os.path.basename(pdf_path),
+        )
+    except Exception as exc:
+        logger.exception("Failed to generate report: %s", report_key)
+        return {"status": "error", "message": str(exc)}
+
+
+@app.get("/reports/{report_key}")
+def reports(report_key: str, background_tasks: BackgroundTasks):
+    return _serve_report(report_key, background_tasks)
+
+
+@app.get("/reports/performance")
+def report_performance(background_tasks: BackgroundTasks):
+    return _serve_report("performance", background_tasks)
+
+
+@app.get("/reports/attrition")
+def report_attrition(background_tasks: BackgroundTasks):
+    return _serve_report("attrition", background_tasks)
+
+
+@app.get("/reports/compensation")
+def report_compensation(background_tasks: BackgroundTasks):
+    return _serve_report("compensation", background_tasks)
+
+
+@app.get("/reports/training")
+def report_training(background_tasks: BackgroundTasks):
+    return _serve_report("training", background_tasks)
+
+
+@app.get("/reports/behavioral")
+def report_behavioral(background_tasks: BackgroundTasks):
+    return _serve_report("behavioral", background_tasks)
+
+
+@app.get("/reports/project")
+def report_project(background_tasks: BackgroundTasks):
+    return _serve_report("project", background_tasks)
+
+
+@app.get("/reports/hiring")
+def report_hiring(background_tasks: BackgroundTasks):
+    return _serve_report("hiring", background_tasks)
+
+
+@app.get("/reports/executive-summary")
+def report_executive_summary(background_tasks: BackgroundTasks):
+    return _serve_report("executive-summary", background_tasks)
 
 
 @app.get("/performance-groups")

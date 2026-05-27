@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 
 import "./App.css";
 import ChatbotPage from "./ChatbotPage";
+import HomePage from "./HomePage";
+import ReportsPage from "./ReportsPage";
 
 import { getBasicStats } from "./services/api";
 
@@ -220,8 +222,14 @@ const QUESTION_SECTIONS = [
 
 function App() {
   const path = window.location.pathname;
+  if (path === "/") {
+    return <HomePage />;
+  }
   if (path === "/chatbot") {
     return <ChatbotPage />;
+  }
+  if (path === "/reports") {
+    return <ReportsPage />;
   }
 
   const isDashboard = path === "/dashboard";
@@ -294,100 +302,7 @@ function App() {
   };
 
   if (!isDashboard) {
-    return (
-      <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
-        <div className="absolute inset-0 bg-radial-soft" />
-        <div className="absolute -left-16 top-24 h-64 w-64 rounded-full bg-sky-500/20 blur-blob" />
-        <div className="absolute right-10 top-10 h-72 w-72 rounded-full bg-indigo-500/20 blur-blob" />
-        <div className="relative mx-auto flex min-h-screen max-w-6xl flex-col gap-16 px-6 py-16">
-          <header className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
-            <div className="max-w-2xl space-y-5">
-              <p className="text-sm uppercase tracking-[0.2em] text-sky-200">GenAI Employee Analytics</p>
-              <h1 className="font-display text-4xl font-semibold text-slate-100 md:text-5xl">
-                A unified workspace for talent intelligence, insight automation, and actionable HR strategy.
-              </h1>
-              <p className="text-base text-slate-300">
-                Explore employee performance, engagement, training impact, and retention risks through AI-assisted insights and a RAG-powered chatbot. Built to highlight patterns quickly and guide smarter decisions.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <button
-                  type="button"
-                  className="rounded-full bg-sky-500 px-6 py-3 text-sm font-semibold text-slate-950 transition hover:-translate-y-0.5 hover:bg-sky-400"
-                  onClick={() => (window.location.href = "/dashboard")}
-                >
-                  Open Dashboard
-                </button>
-                <button
-                  type="button"
-                  className="rounded-full border border-emerald-500/40 bg-emerald-500/10 px-6 py-3 text-sm font-semibold text-emerald-100 transition hover:-translate-y-0.5 hover:border-emerald-300/70"
-                  onClick={() => (window.location.href = "/chatbot")}
-                >
-                  Launch Chatbot
-                </button>
-              </div>
-            </div>
-            <div className="flex w-full max-w-sm flex-col gap-4 rounded-3xl border border-slate-800/70 bg-slate-900/80 p-6 shadow-2xl">
-              <div className="space-y-2">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Project Overview</p>
-                <h2 className="font-display text-2xl">7 Insight Sections</h2>
-                <p className="text-sm text-slate-300">25 curated questions with AI-generated summaries and direct chatbot deep-dives.</p>
-              </div>
-              <div className="space-y-2">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Data Sources</p>
-                <p className="text-sm text-slate-200">Employee dataset with performance, engagement, training, compensation, and project metrics.</p>
-              </div>
-              <div className="space-y-2">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Delivery</p>
-                <p className="text-sm text-slate-200">FastAPI analytics + React interface + RAG chatbot insights.</p>
-              </div>
-            </div>
-          </header>
-
-            <section className="grid gap-6 md:grid-cols-3">
-            {[
-              {
-                title: "Insight Dashboard",
-                description: "Sectioned analytics with curated prompts and AI summaries for each use case.",
-                  accent: "from-sky-500/20 via-slate-900/0 to-slate-900/0",
-              },
-              {
-                title: "Chatbot Intelligence",
-                description: "Ask natural language questions and get narrative responses with visual context.",
-                  accent: "from-emerald-500/20 via-slate-900/0 to-slate-900/0",
-              },
-              {
-                title: "Decision Signals",
-                description: "Identify retention risks, compensation gaps, and training ROI in minutes.",
-                  accent: "from-amber-500/20 via-slate-900/0 to-slate-900/0",
-              },
-            ].map((card) => (
-              <div
-                key={card.title}
-                  className={`glass-panel animate-fade-up rounded-2xl bg-gradient-to-br ${card.accent} p-6 transition hover:-translate-y-1 hover:shadow-xl`}
-              >
-                <h3 className="font-display text-xl text-slate-100">{card.title}</h3>
-                <p className="mt-3 text-sm text-slate-300">{card.description}</p>
-              </div>
-            ))}
-          </section>
-
-          <section className="rounded-3xl border border-slate-800/70 bg-slate-900/70 p-8 shadow-2xl">
-            <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-              <div className="space-y-2">
-                <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Pipeline</p>
-                <h3 className="font-display text-2xl text-slate-100">From raw data to strategic insight</h3>
-                <p className="text-sm text-slate-300">Preprocessing, analytics, and AI reasoning combine to surface the most relevant signals.</p>
-              </div>
-              <div className="flex flex-col gap-2 text-sm text-slate-300">
-                <span>- Data normalization and cached insights</span>
-                <span>- Prompt-driven analytical reasoning</span>
-                <span>- Visual summaries tied to chat responses</span>
-              </div>
-            </div>
-          </section>
-        </div>
-      </div>
-    );
+    return <HomePage />;
   }
 
   return (
@@ -404,6 +319,13 @@ function App() {
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
+            <button
+              type="button"
+              className="rounded-full border border-sky-400/40 bg-sky-500/10 px-5 py-2 text-sm font-semibold text-sky-100 transition hover:-translate-y-0.5 hover:border-sky-300/70"
+              onClick={() => (window.location.href = "/reports")}
+            >
+              Reports Center
+            </button>
             <button
               type="button"
               className="rounded-full border border-amber-400/40 bg-amber-500/10 px-5 py-2 text-sm font-semibold text-amber-100 transition hover:-translate-y-0.5 hover:border-amber-300/70"

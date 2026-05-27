@@ -13,8 +13,18 @@ const insightClient = axios.create({
   timeout: 60000,
 });
 
+const reportClient = axios.create({
+  baseURL: BASE_URL,
+  timeout: 90000,
+});
+
 export async function getBasicStats() {
   const response = await apiClient.get("/basic-stats");
+  return response.data;
+}
+
+export async function getDashboardOverview() {
+  const response = await apiClient.get("/dashboard-overview");
   return response.data;
 }
 
@@ -191,4 +201,11 @@ export async function getBenefitsInsight() {
 export async function getHiringIntelligenceInsight() {
   const response = await insightClient.get("/insights/hiring-intelligence");
   return response.data;
+}
+
+export async function downloadReport(reportKey) {
+  const response = await reportClient.get(`/reports/${reportKey}`, {
+    responseType: "blob",
+  });
+  return response;
 }

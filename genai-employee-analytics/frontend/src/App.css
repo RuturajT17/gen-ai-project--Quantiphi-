@@ -17,3 +17,18 @@
 .text-glow {
   text-shadow: 0 0 24px rgba(14, 165, 233, 0.35);
 }
+
+.recharts-default-tooltip {
+  background: rgba(15, 23, 42, 0.9) !important;
+  border: 1px solid rgba(148, 163, 184, 0.35) !important;
+  color: #e2e8f0;
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.45);
+}
+
+.recharts-tooltip-label {
+  color: #e2e8f0 !important;
+}
+
+.recharts-tooltip-item {
+  color: #cbd5f5 !important;
+}
