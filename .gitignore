@@ -1,0 +1,56 @@
+# Ignore everything at repo root except the project folder and this file
+*
+!.gitignore
+!genai-employee-analytics/
+!genai-employee-analytics/**
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Environment files
+.env
+.env.*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Data files (local datasets)
+/genai-employee-analytics/backend/data/*.csv
+
+# Frontend
+/genai-employee-analytics/node_modules/
+/genai-employee-analytics/frontend/node_modules/
+/genai-employee-analytics/frontend/build/
+
+# Frontend env
+/genai-employee-analytics/frontend/.env
+/genai-employee-analytics/frontend/.env.*
+
+# Documents
+*.txt
+*.xlsx
+*.docx
+
+# Coverage
+coverage/
+.nyc_output/

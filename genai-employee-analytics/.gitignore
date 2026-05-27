@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Environment files
+.env
+.env.*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Data files (local datasets)
+/backend/data/*.csv
+
+# Documents
+*.txt
+*.xlsx
+*.docx
+
+# Frontend
+/node_modules/
+/frontend/node_modules/
+/frontend/build/
+
+# Frontend env
+/frontend/.env
+/frontend/.env.*
+
+# Coverage
+coverage/
+.nyc_output/
