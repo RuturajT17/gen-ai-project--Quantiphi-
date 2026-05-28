@@ -292,7 +292,7 @@ def generate_chat_response(df: pd.DataFrame, query: str) -> Dict[str, Any]:
             compact_rows.append(compact)
 
     prompt = (
-        "You are an HR analytics assistant. Use the employee data sample to answer the query. "
+        "You are an HR analytics assistant. Use only the employee data samples provided to answer the query. "
         "Respond with key insights and recommendations.\n\n"
         f"Query: {normalized_query}\n"
         f"Columns: {columns}\n"
@@ -312,6 +312,8 @@ def generate_chat_response(df: pd.DataFrame, query: str) -> Dict[str, Any]:
     summary = {
         "chart": chart,
         "chart_description": chart.get("description") if chart else None,
+        "grounding_columns": columns,
+        "grounding_row_count": len(samples),
     }
 
     response = {

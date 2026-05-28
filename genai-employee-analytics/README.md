@@ -12,9 +12,7 @@ GenAI Employee Analytics is a full-stack analytics platform for workforce perfor
 
 ## Architecture
 
-![GenAI Employee Analytics System Architecture](docs/architecture.png)
 
-The diagram below is Mermaid and renders directly in GitHub README. You do not need a separate image file unless you prefer a custom graphic.
 
 ```mermaid
 flowchart TD
@@ -31,6 +29,12 @@ flowchart TD
 ```
 
 If you want a custom diagram (SVG/PNG), add it to the repo (for example, `docs/architecture.svg`) and link it in the README.
+
+## Methodology
+
+- Retrieval: Query intent maps to relevant columns, followed by TF-IDF similarity (with keyword overlap fallback).
+- Sampling: Top matching rows are sampled and compacted to keep prompts small and grounded.
+- AI Output Format: Insights follow a structured format with key insights, reasons, risks, and recommendations.
 
 ## Project Structure
 

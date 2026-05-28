@@ -317,6 +317,16 @@ def generate_report(report_key, df):
         story.append(_build_list(_default_recommendations()))
         story.append(Spacer(1, 12))
 
+        story.append(Paragraph("Assumptions & Limits", styles["Heading2"]))
+        story.append(
+            Paragraph(
+                "Insights are based on sampled rows and aggregated summaries from the latest dataset snapshot."
+                " Results may vary with new data or additional context.",
+                styles["BodyText"],
+            )
+        )
+        story.append(Spacer(1, 12))
+
         story.append(Paragraph("Conclusion", styles["Heading2"]))
         story.append(
             Paragraph(

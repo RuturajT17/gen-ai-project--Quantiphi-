@@ -260,6 +260,8 @@ function ChatbotPage() {
       const nextChart = nextSummary?.chart || null;
       const chartTitle = nextChart?.title || "Insight Chart";
       const chartDescription = nextSummary?.chart_description || "";
+      const groundingColumns = nextSummary?.grounding_columns || [];
+      const groundingRowCount = nextSummary?.grounding_row_count ?? null;
 
       setMessages((prev) => [
         ...prev,
@@ -269,6 +271,8 @@ function ChatbotPage() {
           chart: nextChart,
           chartTitle,
           chartDescription,
+          groundingColumns,
+          groundingRowCount,
           sourceQuery: query,
         },
       ]);
@@ -363,6 +367,23 @@ function ChatbotPage() {
                       <p className="text-sm text-slate-200">{msg.text}</p>
                     )}
                   </div>
+                  {msg.role === "bot" && (msg.groundingColumns?.length || msg.groundingRowCount !== null) && (
+                    <div className="mt-3 rounded-2xl border border-slate-800/70 bg-slate-950/40 p-3 text-xs text-slate-300">
+                      <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Grounding Summary</p>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {msg.groundingRowCount !== null && (
+                          <span className="rounded-full border border-slate-700/70 bg-slate-900/70 px-3 py-1 text-[11px] text-slate-200">
+                            Rows used: {msg.groundingRowCount}
+                          </span>
+                        )}
+                        {msg.groundingColumns?.length ? (
+                          <span className="rounded-full border border-slate-700/70 bg-slate-900/70 px-3 py-1 text-[11px] text-slate-200">
+                            Columns: {msg.groundingColumns.join(", ")}
+                          </span>
+                        ) : null}
+                      </div>
+                    </div>
+                  )}
                   {msg.role === "bot" && msg.chart && (
                     <div className="mt-4 space-y-4 rounded-2xl border border-emerald-400/30 bg-slate-950/40 p-4">
                       <div className="flex flex-wrap items-center justify-between gap-2">

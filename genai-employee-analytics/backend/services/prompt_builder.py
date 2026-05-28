@@ -23,6 +23,7 @@ Instructions:
 2. Explain possible reasons behind those patterns
 3. Highlight any risks or concerns
 4. Provide actionable recommendations
+5. Use only the provided sample records and summary metrics; do not assume additional data
 
 Output Format:
 - Key Insights:
