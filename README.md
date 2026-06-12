@@ -28,7 +28,7 @@ flowchart TD
 	I --> J[React Frontend]
 ```
 
-If you want a custom diagram (SVG/PNG), add it to the repo (for example, `docs/architecture.svg`) and link it in the README.
+
 
 ## Methodology
 
